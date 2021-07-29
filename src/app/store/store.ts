@@ -1,10 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import trendingReducer from '../../features/trending/store/trendingSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    trending: trendingReducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware()
 });
 
 export type AppDispatch = typeof store.dispatch;
