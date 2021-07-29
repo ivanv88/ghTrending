@@ -2,8 +2,8 @@ import { FunctionComponent } from "react";
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  background-color: ${props => props.theme.dark ? '#0d1117' : 'white'};
-  border-bottom: 1px solid ${props => props.theme.dark ? '#30363d' : 'gray'};
+  background-color: #0d1117;
+  border-bottom: 1px solid #30363d;
 `;
 
 const Container = styled.div`

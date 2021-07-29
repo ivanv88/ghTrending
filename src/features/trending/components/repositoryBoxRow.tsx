@@ -39,7 +39,7 @@ const Description = styled.p`
   width: 75%;
 `;
 
-export const RepositoryBoxRow: FunctionComponent<{repository: IRepository}> = ({repository}) => {
+export const RepositoryBoxRow: FunctionComponent<{repository: IRepository, since: 'Today' | 'This week' | 'This month'}> = ({repository, since}) => {
   return (
     <BoxRow>
       <Flex>
@@ -60,7 +60,7 @@ export const RepositoryBoxRow: FunctionComponent<{repository: IRepository}> = ({
                         language={ repository.language }
                         stars={ repository.starsSince }
                         starsSince={ repository.starsSince }
-                        since={ 'this week' }
+                        since={ since.toLowerCase() }
                         />
     </BoxRow>
 

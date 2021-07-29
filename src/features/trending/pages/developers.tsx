@@ -7,7 +7,7 @@ import { fetchDevelopersThunk } from '../store/trendingThunks';
 
 export const Developers: FunctionComponent = () => {
   const dispatch = useDispatch();
-  const { developers, isLoading, error } = useSelector(selectTrending);
+  const { developers } = useSelector(selectTrending);
   useEffect(() => {
     dispatch(fetchDevelopersThunk());
   }, [dispatch]);

@@ -6,14 +6,14 @@ import { fetchRepositoriesThunk } from "../store/trendingThunks";
 
 export const Repositories: FunctionComponent = () => {
   const dispatch = useDispatch();
-  const { repositories, isLoading, error } = useSelector(selectTrending);
+  const { repositories, selectedDateRange } = useSelector(selectTrending);
   useEffect(() => {
     dispatch(fetchRepositoriesThunk());
   }, [dispatch]);
   return (
     <div>
       {
-        repositories.map(repo => <RepositoryBoxRow repository={ repo } key={ repo.repositoryName } />)
+        repositories.map(repo => <RepositoryBoxRow repository={ repo } since={ selectedDateRange } key={ repo.repositoryName } />)
       }
     </div>
   )

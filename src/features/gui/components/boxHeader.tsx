@@ -1,6 +1,10 @@
 import { FunctionComponent } from "react";
 import styled from "styled-components";
 import { Navigation } from "../../trending/components/navigation";
+import { SelectMenuLanguages } from "../../trending/components/selectMenuLanguages";
+import { SelectProgrammingLanguages } from "../../trending/components/selectProgrammingLanguage";
+import { useLocation } from 'react-router-dom'
+import { SelectDateRange } from "../../trending/components/selectDateRange";
 
 const Wrapper = styled.div`
 @media (min-width: 768px) {
@@ -16,11 +20,23 @@ const Wrapper = styled.div`
 }
 `;
 
+const Flex = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 
 export const BoxHeader: FunctionComponent = () => {
+  const location = useLocation();
+  
   return (
   <Wrapper>
     <Navigation></Navigation>
+    <Flex>
+      { location.pathname !== '/developers' && <SelectMenuLanguages />}
+      <SelectProgrammingLanguages />
+      <SelectDateRange />
+    </Flex>
   </Wrapper>
   )
 }

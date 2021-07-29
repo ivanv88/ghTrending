@@ -10,6 +10,9 @@ export interface TrendingState {
   developers: IDeveloper[];
   spokenLanguages: ISpokenLanguage[];
   programmingLanguages: string[];
+  selectedLanguage: ISpokenLanguage | null;
+  selectedProgrammingLanguage: string | null;
+  selectedDateRange: 'Today' | 'This week' | 'This month',
   isLoading: boolean;
   error: string | null;
 }
@@ -19,6 +22,9 @@ const initialState: TrendingState = {
   repositories: [],
   spokenLanguages: spokenLanguages,  
   programmingLanguages: programmingLanguages,
+  selectedLanguage: null,
+  selectedProgrammingLanguage: null,
+  selectedDateRange: 'Today',
   isLoading: false,
   error: null
 }
