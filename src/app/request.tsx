@@ -11,7 +11,8 @@ type RequestOptions = {
   responseType?: 'arraybuffer' | 'blob' | 'document' | 'json' | 'text' | 'stream';
   data?: object;
   headers?: object;
-  cancelToken?: CancelToken
+  cancelToken?: CancelToken,
+  params?: any
 }
 
 const BASE_URL = 'https://gentle-fjord-28219.herokuapp.com'
@@ -23,7 +24,8 @@ export default function request<T>(
   options: RequestOptions = {
     method: 'GET',
     data: {},
-    headers: {}
+    headers: {},
+    params: {}
   }
 ): Promise<AxiosResponse<T>> {
   const config: AxiosRequestConfig = {
@@ -38,6 +40,7 @@ export default function request<T>(
       Authorization: `Bearer ${FAKE_TOKEN}`,
       ...options.headers,
     },
+    params: options.params
   };
   return axios(config)
   .then((response: AxiosResponse<T>) => Promise.resolve(response))

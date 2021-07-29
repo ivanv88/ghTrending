@@ -13,7 +13,9 @@ export const Repositories: FunctionComponent = () => {
   return (
     <div>
       {
-        repositories.map(repo => <RepositoryBoxRow repository={ repo } since={ selectedDateRange } key={ repo.repositoryName } />)
+        repositories.map(repo => <RepositoryBoxRow repository={ repo }
+                                                   since={ selectedDateRange.view }
+                                                   key={ repo.repositoryName } />)
       }
     </div>
   )

@@ -10,7 +10,7 @@ const Padding = styled.div`
   padding: 0 15px;
 `;
 
-export const SelectProgrammingLanguages: FunctionComponent = () => {
+export const SelectProgrammingLanguages: FunctionComponent<{ handleSelectFn: (lang: string) => any }> = ({ handleSelectFn }) => {
   const [filter, setFilter] = useState('');
   const [lang, setLang] = useState('');
   //@ts-ignore
@@ -20,7 +20,7 @@ export const SelectProgrammingLanguages: FunctionComponent = () => {
  //@ts-ignore
   const handleSelect = (e) => {
     setLang(e);
-    console.log(e);
+    handleSelectFn(e);
   }
 
   return(
@@ -31,6 +31,7 @@ export const SelectProgrammingLanguages: FunctionComponent = () => {
         <SelectMenu.Header>Select a language</SelectMenu.Header>
         <SelectMenu.Filter placeholder="Filter languages" value={filter} aria-label="Filter Languages" onChange={handleFilter} />
         <SelectMenu.List>
+        <SelectMenu.Item selected={!lang} onClick={() => handleSelect('')} >Any</SelectMenu.Item>
           {
             programmingLanguages.filter(lang => !filter || lang.toLowerCase().includes(filter.toLowerCase()))
                 .map((language) => <SelectMenu.Item selected={language === lang} onClick={() => handleSelect(language)} key={language}>{language}</SelectMenu.Item>)

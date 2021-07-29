@@ -1,3 +1,4 @@
+import { IDateRange } from './../../../app/model/dateRange.model';
 import { IDeveloper } from './../../../app/model/developer.model';
 import { IRepository } from './../../../app/model/repository.model';
 import { programmingLanguages } from './../constants/programmingLanguages';
@@ -12,7 +13,7 @@ export interface TrendingState {
   programmingLanguages: string[];
   selectedLanguage: ISpokenLanguage | null;
   selectedProgrammingLanguage: string | null;
-  selectedDateRange: 'Today' | 'This week' | 'This month',
+  selectedDateRange: IDateRange,
   isLoading: boolean;
   error: string | null;
 }
@@ -24,7 +25,7 @@ const initialState: TrendingState = {
   programmingLanguages: programmingLanguages,
   selectedLanguage: null,
   selectedProgrammingLanguage: null,
-  selectedDateRange: 'Today',
+  selectedDateRange: {view: 'Today', value: 'daily'},
   isLoading: false,
   error: null
 }
@@ -48,6 +49,15 @@ export const trendingSlice = createSlice({
       state.isLoading = false;
       state.error = null;
       state.repositories = action.payload
+    },
+    setSelectedLanguage: (state, action: PayloadAction<ISpokenLanguage>) => {
+      state.selectedLanguage = action.payload
+    },
+    setProgrammingLanguage: (state, action: PayloadAction<string>) => {
+      state.selectedProgrammingLanguage = action.payload
+    },
+    setDateRange: (state, action: PayloadAction<IDateRange>) => {
+      state.selectedDateRange = action.payload
     },
     fetchError: (state, action: PayloadAction<string>) => {
       state.isLoading = false;

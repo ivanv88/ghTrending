@@ -13,7 +13,7 @@ const Padding = styled.div`
   padding: 0 15px;
 `;
 
-export const SelectMenuLanguages: FunctionComponent = () => {
+export const SelectMenuLanguages: FunctionComponent<{ handleSelectFn: (lang: ISpokenLanguage) => any }> = ({ handleSelectFn }) => {
   const [filter, setFilter] = useState('');
   const [lang, setLang] = useState({} as ISpokenLanguage);
   //@ts-ignore
@@ -23,6 +23,7 @@ export const SelectMenuLanguages: FunctionComponent = () => {
  //@ts-ignore
   const handleSelect = (e) => {
     setLang(e);
+    handleSelectFn(e);
   }
 
 

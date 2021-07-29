@@ -3,9 +3,9 @@ import { fetchRepositories } from './../api/api';
 import { fetchDevelopers } from "../api/api"
 import { fetchDevelopersSuccess, fetchError, fetchRepositoriesSuccess } from "./trendingActions"
 
-export const fetchDevelopersThunk = () => {
+export const fetchDevelopersThunk = (options?: { language?: string, since?:  'daily' | 'weekly' | 'monthly'}) => {
   return (dispatch: any) => {
-    fetchDevelopers()
+    fetchDevelopers(options)
       .then((response) => dispatch(
         fetchDevelopersSuccess(response.data as any[])
       ))
@@ -16,9 +16,9 @@ export const fetchDevelopersThunk = () => {
 }
 
 
-export const fetchRepositoriesThunk = () => {
+export const fetchRepositoriesThunk = (options?: { language?: string, since?:  'daily' | 'weekly' | 'monthly', spoken_lang?: string}) => {
   return (dispatch: any) => {
-    fetchRepositories()
+    fetchRepositories(options)
       .then((response) => dispatch(
         fetchRepositoriesSuccess(response.data as IRepository[])
       ))

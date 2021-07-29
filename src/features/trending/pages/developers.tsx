@@ -11,6 +11,7 @@ export const Developers: FunctionComponent = () => {
   useEffect(() => {
     dispatch(fetchDevelopersThunk());
   }, [dispatch]);
+
   
   return (<div>
     {

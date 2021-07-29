@@ -5,6 +5,12 @@ import { SelectMenuLanguages } from "../../trending/components/selectMenuLanguag
 import { SelectProgrammingLanguages } from "../../trending/components/selectProgrammingLanguage";
 import { useLocation } from 'react-router-dom'
 import { SelectDateRange } from "../../trending/components/selectDateRange";
+import { useDispatch, useSelector } from "react-redux";
+import { IDateRange } from "../../../app/model/dateRange.model";
+import { setDateRange, setProgrammingLanguage, setSelectedLanguage } from "../../trending/store/trendingActions";
+import { selectTrending } from "../../trending/store/trendingSelectors";
+import { fetchDevelopersThunk, fetchRepositoriesThunk } from "../../trending/store/trendingThunks";
+import { ISpokenLanguage } from "../../../app/model/language.model";
 
 const Wrapper = styled.div`
 @media (min-width: 768px) {
@@ -27,15 +33,40 @@ const Flex = styled.div`
 
 
 export const BoxHeader: FunctionComponent = () => {
+  const dispatch = useDispatch()
   const location = useLocation();
-  
+  const { selectedDateRange, selectedLanguage, selectedProgrammingLanguage } = useSelector(selectTrending);
+  const handleDateRangeSelect = (range: IDateRange) => {
+      dispatch(setDateRange(range));
+      applyFilters({ language: selectedProgrammingLanguage ? selectedProgrammingLanguage : undefined, since: range.value, spoken_lang: selectedLanguage?.identifier });
+  }
+  const handleProgrammingLanguageSelect = (language: string) => {    
+    dispatch(setProgrammingLanguage(language));
+    applyFilters({ language,  since: selectedDateRange.value, spoken_lang: selectedLanguage?.identifier });
+  }
+
+  const handleLanguageSelect = (language: ISpokenLanguage) => {
+    dispatch(setSelectedLanguage(language));
+    applyFilters({ language: selectedProgrammingLanguage ? selectedProgrammingLanguage : undefined,  since: selectedDateRange.value, spoken_lang: language.identifier });
+  }
+
+  const applyFilters = (options: {language: string | undefined, since: string, spoken_lang?: string}) => {    
+    if (location.pathname !== '/developers') {
+      //@ts-ignore
+      dispatch(fetchRepositoriesThunk({ language: options.language, since: options.since, spoken_lang: options.spoken_lang }))
+    } else {
+      //@ts-ignore
+      dispatch(fetchDevelopersThunk({language: options.language, since: options.since}))
+    }
+  }
+
   return (
   <Wrapper>
     <Navigation></Navigation>
     <Flex>
-      { location.pathname !== '/developers' && <SelectMenuLanguages />}
-      <SelectProgrammingLanguages />
-      <SelectDateRange />
+      { location.pathname !== '/developers' && <SelectMenuLanguages handleSelectFn={ handleLanguageSelect }/>}
+      <SelectProgrammingLanguages handleSelectFn={ handleProgrammingLanguageSelect }/>
+      <SelectDateRange handleSelectFn={ handleDateRangeSelect }/>
     </Flex>
   </Wrapper>
   )
